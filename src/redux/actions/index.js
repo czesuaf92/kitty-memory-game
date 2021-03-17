@@ -1,11 +1,21 @@
 import * as ACTION from '../constants'
-import { generateTiles } from '../../helpers/generateTiles'
+import { generateCards } from '../../helpers'
 
 export const startGame = () => {
-  console.log('startGame action')
   return {
-    type: ACTION.START_GAME,
-    tiles: generateTiles(),
-    gameStatus: 'pending'
+    type: ACTION.START_GAME
+  }
+}
+
+export const flipCard = (index) => {
+  return {
+    type: ACTION.FLIP_CARD,
+    index,
+  }
+}
+
+export const matchCheck = () => {
+  return {
+    type: ACTION.MATCH_CHECK
   }
 }

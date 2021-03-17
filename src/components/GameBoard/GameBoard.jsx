@@ -1,20 +1,49 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { StyledGameBoard } from "./styles"
-import { Tile } from "./Tile";
-import { useSelector } from 'react-redux';
+import { Card } from "./Card";
+import { useSelector, useDispatch } from 'react-redux';
+import { flipCard, matchCheck } from '../../redux/actions';
 
 export const GameBoard = () => {
-  const tiles = useSelector((state) => state.gameReducer.tiles)
+  const { waited, tiles, flippedIndexs } = useSelector((state) => state.gameReducer)
+  const dispatch = useDispatch()
 
-  const renderTiles = () => {
+  useEffect(() => {
+    let timeout = null
+    if (flippedIndexs.length === 2) {
+      timeout = setTimeout(() => {
+        dispatch(matchCheck())
+      }, 700)
+    }
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [flippedIndexs])
+
+  const handleClick = (index) => {
+    if (!waited) {
+      dispatch(flipCard(index))
+    }
+  }
+
+  const renderCards = () => {
     return tiles.map((el, key) => {
-      return (<Tile key={key} imgUrl={el.imgUrl}></Tile>)
+      const isFlipped = el.matched || flippedIndexs.includes(key)
+      return (
+        <Card
+          key={key}
+          imgUrl={el.imgUrl}
+          isFlipped={isFlipped}
+          onClick={() => handleClick(key)}
+          matched={el.matched}
+        />
+      )
     })
   }
 
   return (
     <StyledGameBoard>
-      {renderTiles()}
+      {renderCards()}
     </StyledGameBoard>
   )
 }

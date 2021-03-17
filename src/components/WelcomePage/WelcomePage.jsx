@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { StyledWelcomePageContainer } from './styles'
 import { Button } from '../Button/Button'
-import * as ACTION from '../../redux/constants'
 import { startGame } from '../../redux/actions'
 
 export const WelcomePage = () => {
