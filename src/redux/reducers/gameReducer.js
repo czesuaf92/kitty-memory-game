@@ -2,25 +2,21 @@ import * as ACTION from '../constants'
 import { generateCards } from '../../helpers';
 
 const initState = {
+  userName: '',
   tiles: [],
   gameStatus: 'start',
   flippedIndexs: [],
   waited: false,
-  moves: 0
+  moves: 0,
+  scoreBoardData: []
 }
 
-// const initState = {
-//   tiles: generateCards(),
-//   gameStatus: 'pending',
-//   flippedIndexs: [],
-//   waited: false,
-//   moves: 0
-// }
 export const gameReducer = (state = initState, action) => {
   switch (action.type) {
     case ACTION.START_GAME:
       return {
         ...state,
+        userName: action.userName,
         tiles: generateCards(),
         gameStatus: 'pending'
       }
@@ -30,11 +26,12 @@ export const gameReducer = (state = initState, action) => {
       if (state.flippedIndexs.length < 2) {
         newFlippedIndexs.push(action.index)
       }
+
       return {
         ...state,
         flippedIndexs: newFlippedIndexs,
         waited: newFlippedIndexs.length === 2,
-        moves: state.moves + 1
+        moves: newFlippedIndexs.length === 2 ? state.moves + 1 : state.moves
       }
 
     case ACTION.MATCH_CHECK:
@@ -54,7 +51,24 @@ export const gameReducer = (state = initState, action) => {
         ...state,
         tiles: resultMatchCheck,
         flippedIndexs: [],
-        waited: false
+        waited: false,
+      }
+
+    case ACTION.SHOW_SCOREBOARD:
+      return {
+        ...state,
+        tiles: [],
+        gameStatus: 'end',
+        scoreBoardData: [...state.scoreBoardData, {
+          userName: action.userName,
+          moves: action.moves
+        }],
+      }
+
+    case ACTION.PLAY_AGAIN:
+      return {
+        ...initState,
+        scoreBoardData: state.scoreBoardData
       }
 
     default:

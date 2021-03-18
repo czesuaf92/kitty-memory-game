@@ -1,7 +1,5 @@
-import { StyledButton } from './styles'
-
-export const Button = ({ onClick, children }) => {
+export const Button = ({ onClick, children, type }) => {
   return (
-    <StyledButton onClick={onClick}>{children}</StyledButton>
+    <button onClick={onClick} type={type} className="waves-effect waves-light btn">{children}</button>
   )
 }

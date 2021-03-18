@@ -1,3 +1,5 @@
 export const START_GAME = 'START_GAME'
 export const FLIP_CARD = 'FLIP_CARD'
 export const MATCH_CHECK = 'MATCH_CHECK'
+export const SHOW_SCOREBOARD = 'SHOW_SCOREBOARD'
+export const PLAY_AGAIN = 'PLAY_AGAIN'

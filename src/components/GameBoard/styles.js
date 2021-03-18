@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+export const StyledGameBoardContainer = styled.div`
+  display: block;
+`
 export const StyledGameBoard = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -19,6 +22,14 @@ const StyledCardInner = styled.div`
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  box-sizing: border-box;
+`
+
+export const StyledCardImg = styled.img`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `
 
 export const StyledCardFront = styled(StyledCardInner)`
@@ -26,14 +37,16 @@ export const StyledCardFront = styled(StyledCardInner)`
 `
 
 export const StyledCardBack = styled(StyledCardInner)`
-  
+  padding: 20px;
 `
 
-export const StyledCard = styled.div`
+export const StyledCard = styled.div.attrs((props) => ({
+  style: {
+    height: `${props.height}px`
+  }
+}))`
   flex: 1 0 calc(25% - 4px);
   perspective: 1000px;
-  width: 196px;
-  height: 196px;
   border-radius: 10px;
   overflow: hidden;
   margin: 2px;
@@ -49,9 +62,6 @@ export const StyledCard = styled.div`
   }
 `
 
-export const StyledCardImg = styled.img`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+export const StyledCurrentScore = styled.p`
+  text-align: center;
 `
